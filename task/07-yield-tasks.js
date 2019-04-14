@@ -33,6 +33,14 @@
  *
  */
 function* get99BottlesOfBeer() {
+    let bottles = 99;
+    while (bottles - 1 > 0){
+        let str = `${bottles} bottles of beer on the wall, ${bottles} bottles of beer.
+        Take one down and pass it around, ${bottles - 1} bottles of beer on the wall.`
+        bottles--;
+        yield str;
+    }
+    
     throw new Error('Not implemented');
 }
 
@@ -47,7 +55,14 @@ function* get99BottlesOfBeer() {
  *
  */
 function* getFibonacciSequence() {
-    throw new Error('Not implemented');
+    var prev = 0
+    var curr = 0;
+    var next = 1;
+    prev = curr;
+    curr = next;
+    next = curr + prev;
+    yield prev;
+
 }
 
 
