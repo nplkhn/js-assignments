@@ -22,6 +22,7 @@
  *    'Sun, 17 May 1998 03:00:00 GMT+01' => Date()
  */
 function parseDataFromRfc2822(value) {
+   return new Date(value);
    throw new Error('Not implemented');
 }
 
@@ -37,6 +38,7 @@ function parseDataFromRfc2822(value) {
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
+   return new Date(value);
    throw new Error('Not implemented');
 }
 
@@ -56,6 +58,10 @@ function parseDataFromIso8601(value) {
  *    Date(2015,1,1)    => false
  */
 function isLeapYear(date) {
+   if (date.getFullYear()%400 === 0 || (date.getFullYear()%4 === 0 && date.getFullYear()%100 !== 0)){
+      return true;
+   }
+   return false;
    throw new Error('Not implemented');
 }
 
@@ -76,6 +82,21 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
+   let diffTime = endDate - startDate;
+   let millisecs = diffTime%1000;
+   diffTime = Math.floor(diffTime / 1000);
+   let secs = Math.round(diffTime%60);
+   diffTime = Math.floor(diffTime / 60);   
+   let mins = Math.round(diffTime%60);
+   diffTime = Math.floor(diffTime / 60);
+   let hours = Math.round(diffTime % 24);
+   diffTime = Math.floor(diffTime / 24);
+   let elps = new Date(endDate);
+   elps.setHours(hours);
+   elps.setMinutes(mins);
+   elps.setSeconds(secs);
+   elps.setMilliseconds(millisecs);
+   return `${(elps.getHours()<10)?'0'+elps.getHours():elps.getHours()}:${(elps.getMinutes()<10)?'0'+elps.getMinutes():elps.getMinutes()}:${(elps.getSeconds()<10)?'0'+elps.getSeconds():elps.getSeconds()}.${(elps.getMilliseconds()<10)?'00'+elps.getMilliseconds():elps.getMilliseconds()}`;
    throw new Error('Not implemented');
 }
 
@@ -94,9 +115,11 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+   let M = date.getMinutes();
+   let H = date.getHours();
+   return Math.abs((0.5*(H+M) - 6*M)*Math.PI/180);
+   throw new Error('Not implemented');
 }
-
 
 module.exports = {
     parseDataFromRfc2822: parseDataFromRfc2822,
