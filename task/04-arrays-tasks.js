@@ -370,6 +370,8 @@ function getPositivesCount(arr) {
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
 function sortDigitNamesByNumericOrder(arr) {
+   var digit = 'zero one two three four five six seven eight nine';
+   return arr.sort((a, b) => digit.indexOf(a) - digit.indexOf(b));
    throw new Error('Not implemented');
 }
 
@@ -482,6 +484,12 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  */
 function sortCitiesArray(arr) {
+   return arr.sort((a, b) => {
+      if(a.country === b.country){
+         return a.city > b.city ? 1 : -1;
+      }
+      return a.country > b.country ? 1 : -1;
+   })
    throw new Error('Not implemented');
 }
 
@@ -552,6 +560,7 @@ function distinct(arr) {
          result.push(element);
       }
    })
+   return result;
    throw new Error('Not implemented');
 }
 
@@ -619,6 +628,7 @@ function selectMany(arr, childrenSelector) {
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
 function getElementByIndexes(arr, indexes) {
+   return indexes.reduce((previousValue, currentValue) => previousValue[currentValue], arr);
    throw new Error('Not implemented');
 }
 
